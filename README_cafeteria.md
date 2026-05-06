@@ -22,7 +22,7 @@ La lógica de la aplicación es la siguiente:
     2.3) Cantidad del producto (no puede ser negativa ni cero ni vacío).\
     2.4) Cada producto pertenece a un único pedido.
 
-3)  La lógica de negocio de los pedidos será la siguiente:
+3)  La lógica de negocio de los pedidos será la siguiente:\
     3.1) Cuando se crea un pedido su estado inicial será siempre CREADO y su importe
     total será 0. Estos dos campo no es necesario envíarlo en el JSON\
     3.2) El importe total del pedido será la suma de (precio \*
