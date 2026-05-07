@@ -6,6 +6,10 @@ import com.examen.cafeteria.model.Pedido;
 
 import java.util.List;
 
-public interface PedidoRepository  {
-    //#TODO 5
+public interface PedidoRepository extends JpaRepository<Pedido, Long>{
+    Boolean existsByNombreAndEstado(String nombre, Estado estado);
+
+    Boolean existsByEstado(Estado estado);
+
+    List<Pedido> findByEstado(Estado estado);
 }
