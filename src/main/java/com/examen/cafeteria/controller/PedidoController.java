@@ -52,6 +52,7 @@ public class PedidoController {
     }
 
     @DeleteMapping("/api/pedidos/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id)
     {
         service.delete(id);
@@ -64,9 +65,9 @@ public class PedidoController {
     }
 
     @PutMapping("/api/pedidos/{id}/estado")
-    public Pedido cambiarEstado(@PathVariable Long id, @RequestBody Estado estado)
+    public Pedido cambiarEstado(@PathVariable Long id, @RequestBody Pedido pedidoConEstadoNuevo)
     {
 
-        return service.cambiarEstado(id, estado);
+        return service.cambiarEstado(id, pedidoConEstadoNuevo.getEstado());
     }
 }

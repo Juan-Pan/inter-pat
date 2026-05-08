@@ -11,7 +11,6 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long>{
 
     List<Pedido> findByEstado(Estado estado);
 
-    List<Pedido> findByNombre(String nombre);
 
     List<Pedido> findByProductosNombre(String nombreProducto);
     

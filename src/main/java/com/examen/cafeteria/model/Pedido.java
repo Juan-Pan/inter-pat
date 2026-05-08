@@ -16,7 +16,7 @@ public class Pedido {
     private Long id;
 
     @NotBlank
-    @Column(nullable = false)
+    @Column(nullable = false, name = "cliente")
     private String nombre;
 
     @Enumerated(EnumType.STRING)

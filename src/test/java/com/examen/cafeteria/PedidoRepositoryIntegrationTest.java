@@ -6,7 +6,9 @@ import com.examen.cafeteria.repository.PedidoRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.dao.DataIntegrityViolationException;
+
+// 1. IMPORTANTE: Importa la excepción de validación de Jakarta
+import jakarta.validation.ConstraintViolationException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -18,6 +20,15 @@ public class PedidoRepositoryIntegrationTest {
 
     @Test
     public void cuandoSalvasPedidoSinMail_thenThrowsDataConstraintViolation() {
-        //#TODO 5
+
+        Pedido pedidoSinMail = new Pedido();
+        pedidoSinMail.setNombre("Cliente malo");
+        pedidoSinMail.setEstado(Estado.CREADO);
+        pedidoSinMail.setTotal(0.0);
+
+        // 2. Cambiamos la excepción que estamos esperando
+        assertThrows(ConstraintViolationException.class, () -> {
+            pedidoRepository.saveAndFlush(pedidoSinMail);
+        });
     }
 }
