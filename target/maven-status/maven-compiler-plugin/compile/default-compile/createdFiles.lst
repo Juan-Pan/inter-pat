@@ -1,0 +1,5 @@
+com\examen\cafeteria\model\User.class
+com\examen\cafeteria\repository\UserRepositorio.class
+com\examen\cafeteria\controller\Controlador.class
+com\examen\cafeteria\CafeteriaApplication.class
+com\examen\cafeteria\service\UserServicio.class
