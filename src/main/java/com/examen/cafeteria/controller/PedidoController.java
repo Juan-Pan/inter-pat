@@ -35,27 +35,38 @@ public class PedidoController {
 
     @GetMapping("/api/pedidos/estado/{estado}")
     public List<Pedido> getPedidosEstado(@PathVariable Estado estado) {
+
         return service.getEstado(estado);
     }
 
     @GetMapping("/api/pedidos/productos/{nombre}")
-    public List<Pedido> pedidoPorProducto() {
-        return null;
+    public List<Pedido> pedidoPorProducto(@PathVariable String nombre) {
+
+
+        return service.getNombre(nombre);
+    }
+    @GetMapping("/api/pedidos/productos")
+    public List<Pedido> traerPedidos()
+    {
+        return service.getAll();
     }
 
     @DeleteMapping("/api/pedidos/{id}")
-    public void delete() {
-        ;
+    public void delete(@PathVariable Long id)
+    {
+        service.delete(id);
     }
 
     @PostMapping("/api/pedidos/{id}/productos")
-    public Pedido addProducto() {
+    public Pedido addProducto(@PathVariable Long id, @RequestBody Producto producto) {
 
-        return null;
+        return service.addProducto(id, producto);
     }
 
     @PutMapping("/api/pedidos/{id}/estado")
-    public Pedido cambiarEstado() {
-        return null;
+    public Pedido cambiarEstado(@PathVariable Long id, @RequestBody Estado estado)
+    {
+
+        return service.cambiarEstado(id, estado);
     }
 }

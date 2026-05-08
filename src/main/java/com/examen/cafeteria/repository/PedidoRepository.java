@@ -9,7 +9,10 @@ import java.util.List;
 public interface PedidoRepository extends JpaRepository<Pedido, Long>{
     Boolean existsByNombreAndEstado(String nombre, Estado estado);
 
-    Boolean existsByEstado(Estado estado);
-
     List<Pedido> findByEstado(Estado estado);
+
+    List<Pedido> findByNombre(String nombre);
+
+    List<Pedido> findByProductosNombre(String nombreProducto);
+    
 }

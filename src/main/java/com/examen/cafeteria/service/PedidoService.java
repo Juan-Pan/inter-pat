@@ -9,6 +9,7 @@ import org.springframework.transaction.reactive.TransactionalOperator;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PedidoService {
@@ -57,21 +58,60 @@ public class PedidoService {
         return pedidos;
     }
 
+    public List<Pedido> getNombre(String nombreProducto)
+    {
+        List<Pedido> pedidos = pedidoRepository.findByProductosNombre(nombreProducto);
+        if (pedidos.isEmpty())
+        {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "no hay pedidos con el producto: " + nombreProducto);
+        }
+        return pedidos;
+    }
+
     public List<Pedido> getAll()
     {
-        return null;
+        List<Pedido> pedidos = pedidoRepository.findAll();
+        if(pedidos.isEmpty())
+        {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No hay pedidos en la base de datos");
+        }
+        return  pedidos;
     }
 
     public void delete(Long id) {
-        return;
+        if (!pedidoRepository.existsById(id))
+        {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe un pedido con ese id");
+        }
+        pedidoRepository.deleteById(id);
     }
 
-    public Pedido addProducto(Long id, Producto producto) {
+    public Pedido addProducto(Long id, Producto producto)
+    {
+        Pedido pedido = pedidoRepository.findById(id).get();
+        if (!pedidoRepository.existsById(id))
+        {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontró un pedido con el id dado");
+        }
+        if(pedido.getEstado() == Estado.CANCELADO || pedido.getEstado() == Estado.SERVIDO )
+        {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "No pueden agregar productos al pedido");
+        }
+        producto.setPedido(pedido); // te pertenezco (clase hija)
+        pedido.getProductos().add(producto); // te añado a mi lista (clase padre)
 
-        return null;
+        pedido.calcularTotal();
+
+        return pedidoRepository.save(pedido);
+
+
     }
 
     public Pedido cambiarEstado(Long id, Estado nuevoEstado) {
+
+
+
+
 
             return null;
     }
